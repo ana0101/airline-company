@@ -1,9 +1,9 @@
 -- 12: Cereri sql complexe
 
 -- 12.1
--- Cerin??: S? se ob?in? înso?itorii de zbor al c?ror nume con?ine litera „a” care au participat la zborurile din anii 2020 ?i 2021
--- care au plecat din ora?ul Frankfurt  ?i care au avut gradul de ocupare (câ?i pasageri au trecut de check-in
--- fa?? de câte locuri sunt în avionul respectiv) mai mic de 40%. 
+-- Cerin??: S? se ob?in? ï¿½nso?itorii de zbor al c?ror nume con?ine litera ï¿½aï¿½ care au participat la zborurile din anii 2020 ?i 2021
+-- care au plecat din ora?ul Frankfurt  ?i care au avut gradul de ocupare (cï¿½?i pasageri au trecut de check-in
+-- fa?? de cï¿½te locuri sunt ï¿½n avionul respectiv) mai mic de 40%. 
 -- Elemente: blocuri de cerere (clauza with), func?ie pe ?iruri de caractere, func?ie pe date calendaristice 
 select distinct z.id_zbor, z.data_plecare, i.id_insotitor, i.nume, a.id_aeroport, o.nume oras
 from insotitori_zbor i, echipaj_insotitori ei, zboruri z, aeroporturi a, orase o
@@ -33,7 +33,7 @@ and z.id_zbor in (with locuri_zbor as (select id_zbor, count(id_loc) nr_loc
 -- 12.2
 -- Cerin??: S? se ob?in? suma greut??ii bagajelor din fiecare zbor ?i s? se determine dac? este egal? cu 25 sau 35. 
 -- Zborurile s? fie ordonate cresc?tor dup? suma greut??ii bagajelor. 
--- Elemente: subcerere nesincronizat? în clauza from, ordon?ri ?i utilizarea func?iilor nvl ?i decode 
+-- Elemente: subcerere nesincronizat? ï¿½n clauza from, ordon?ri ?i utilizarea func?iilor nvl ?i decode 
 select z.id_zbor, z.suma, decode(z.suma, 25, 'suma egala cu 25', 35, 'suma egala cu 35', 'suma diferita de 25 si 35') rezultat
 from (select nvl(sum(b.greutate), 0) suma, r.id_zbor
         from bagaje b, check_in c, rezervari r
@@ -46,9 +46,9 @@ order by z.suma;
 
 -- 12.3
 -- Cerin??: S? se ob?in? avioanele ?i modelul acestora (id + nume) care au participat la primele 2 zboruri 
--- care au încasat cei mai pu?ini bani din vânzarea cu plat? de tip online a locurilor la clasa business, 
--- dar care au încasat mai mult de 100 din vânzarea acestor bilete (dac? sunt mai multe zboruri cu aceea?i sum? de bani minim?, se afi?eaz? toate). 
--- Elemente: subcerere sincronizat? în care intervin cel pu?in 3 tabele, grup?ri de date cu subcereri nesincronizate în care intervin cel pu?in 3 tabele, 
+-- care au ï¿½ncasat cei mai pu?ini bani din vï¿½nzarea cu plat? de tip online a locurilor la clasa business, 
+-- dar care au ï¿½ncasat mai mult de 100 din vï¿½nzarea acestor bilete (dac? sunt mai multe zboruri cu aceea?i sum? de bani minim?, se afi?eaz? toate). 
+-- Elemente: subcerere sincronizat? ï¿½n care intervin cel pu?in 3 tabele, grup?ri de date cu subcereri nesincronizate ï¿½n care intervin cel pu?in 3 tabele, 
 -- func?ii grup, filtrare la nivel de grupuri, func?ii pe ?iruri de caractere                 
 select distinct a.id_avion, z.id_zbor, m.id_model_avion, m.nume_model
 from avioane a, zboruri z, modele_avioane m
@@ -78,10 +78,10 @@ and (select sum(l.pret) bani
                                     
                                             
 -- 12.4
--- Cerin??: Se cere ca pentru fiecare rezervare care a fost f?cut? cu cel pu?in o lun? ?i jum?tate înainte de data de plecare a zborului s? se afle
--- dac? rezervarea a fost f?cut? de c?tre pasager (acest lucru se poate afla comparând numar_id, adic? atributul de cnp/security number), 
+-- Cerin??: Se cere ca pentru fiecare rezervare care a fost f?cut? cu cel pu?in o lun? ?i jum?tate ï¿½nainte de data de plecare a zborului s? se afle
+-- dac? rezervarea a fost f?cut? de c?tre pasager (acest lucru se poate afla comparï¿½nd numar_id, adic? atributul de cnp/security number), 
 -- de c?tre o alt? persoan? cu aceea?i ultim? liter? a numelui ca ?i a pasagerului, de c?tre o alt? persoan? cu o alt? ultim? liter? a numelui,
--- de c?tre o agen?ie de turism sau de c?tre un reprezentant de vânz?ri. 
+-- de c?tre o agen?ie de turism sau de c?tre un reprezentant de vï¿½nz?ri. 
 -- Elemente: expresie case, func?ii pe ?iruri de caractere, func?ie pe date calendaristice 
 select r.id_rezervare, r.id_loc, r.id_zbor, r.id_pasager, r.id_client, round(months_between(z.data_plecare, r.data_rezervare), 2) nr_luni,
 case when (exists(select pf.id_persoana 
@@ -118,9 +118,9 @@ order by r.id_zbor, r.id_rezervare;
 
 
 -- 12.5
--- Cerin??: S? se ob?in? zborurile care au num?rul de rezerv?ri pentru fiecare clas? (cele care au fost disponibile în acel zbor)
--- mai mare decât media num?rului de rezerv?ri pentru clasa respectiv?. 
--- Elemente: subcerere nesincronizat? în clauza from, grup?ri de date cu subcereri nesincronizate in care intervin cel pu?in 3 tabele, 
+-- Cerin??: S? se ob?in? zborurile care au num?rul de rezerv?ri pentru fiecare clas? (cele care au fost disponibile ï¿½n acel zbor)
+-- mai mare decï¿½t media num?rului de rezerv?ri pentru clasa respectiv?. 
+-- Elemente: subcerere nesincronizat? ï¿½n clauza from, grup?ri de date cu subcereri nesincronizate in care intervin cel pu?in 3 tabele, 
 -- func?ii grup, filtrare la nivel de grupuri, blocuri de cerere (clauza with) 
 with b as (select z.id_zbor z1, count(a.zbor) nr_aparitii
             from zboruri z, (select r.id_zbor zbor, l.id_clasa, c.nume, count(r.id_rezervare) nr
@@ -156,7 +156,7 @@ order by z.id_zbor;
 
 -- 13.1: Actualizare
 -- Cerin??: S? se mic?oreze cu 10% pre?urile locurilor la clasa economy care nu au fost rezervate din zborurile 
--- la care au fost rezervate mai pu?in de jum?tate din locurile puse la vânzare la clasa economy.                     
+-- la care au fost rezervate mai pu?in de jum?tate din locurile puse la vï¿½nzare la clasa economy.                     
 commit;
 
 update locuri
@@ -192,7 +192,7 @@ rollback;
 
 
 -- 13.2: Actualizare
--- Cerin??: S? se schimbe tipul de plat? din online în transfer bancar pentru toate pl??ile f?cute pentru rezerv?ri 
+-- Cerin??: S? se schimbe tipul de plat? din online ï¿½n transfer bancar pentru toate pl??ile f?cute pentru rezerv?ri 
 -- din zborurile cu cel mai mare num?r de pl??i online.                                                                      
 commit;
                                             
@@ -217,7 +217,7 @@ rollback;
 
 
 -- 13.3: Suprimare
--- Cerin??: S? se ?tearg? toate ora?ele în care nu ajunge niciun zbor. 
+-- Cerin??: S? se ?tearg? toate ora?ele ï¿½n care nu ajunge niciun zbor. 
 commit;
 
 delete
@@ -247,8 +247,8 @@ order by t.id_tara, o.id_oras;
 
 
 -- 14.2: Division
--- Cerin??: S? se afi?eze id-ul ?i numele pasagerilor care au avut rezerv?ri în zboruri care au ajuns 
--- în toate aeroporturile în care au ajuns zborurile în care pasagerul cu id-ul 11 a avut rezervare. 
+-- Cerin??: S? se afi?eze id-ul ?i numele pasagerilor care au avut rezerv?ri ï¿½n zboruri care au ajuns 
+-- ï¿½n toate aeroporturile ï¿½n care au ajuns zborurile ï¿½n care pasagerul cu id-ul 11 a avut rezervare. 
 select distinct p1.id_pasager, p1.nume
 from pasageri p1, rezervari r1
 where p1.id_pasager = r1.id_pasager
@@ -283,7 +283,7 @@ where rownum < 3;
 -- Cerin??: S? se ob?in? locurile (id_loc, id_zbor) din clasa business care au fost rezervate, 
 -- au fost pl?tite online ?i au avut pre?ul mai mare sau egal cu 90. 
 
--- Înainte de optimizare
+-- ï¿½nainte de optimizare
 select l.id_loc, l.id_zbor
 from locuri l, rezervari r, clase c, plati p
 where c.id_clasa = l.id_clasa

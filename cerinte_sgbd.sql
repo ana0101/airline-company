@@ -1,7 +1,7 @@
 commit;
 
 -- 6
--- Formula?i în limbaj natural o problem? pe care s? o rezolva?i folosind un subprogram stocat independent 
+-- Formula?i ï¿½n limbaj natural o problem? pe care s? o rezolva?i folosind un subprogram stocat independent 
 -- care s? utilizeze toate cele 3 tipuri de colec?ii studiate. Apela?i subprogramul.
 
 -- Luati primele v_nr zboruri si puneti id-ul lor intr-un vector.
@@ -93,7 +93,7 @@ rollback;
 
 
 -- 7
--- Formula?i în limbaj natural o problem? pe care s? o rezolva?i folosind un subprogram stocat independent 
+-- Formula?i ï¿½n limbaj natural o problem? pe care s? o rezolva?i folosind un subprogram stocat independent 
 -- care s? utilizeze 2 tipuri diferite de cursoare studiate, unul dintre acestea fiind cursor parametrizat, 
 -- dependent de cel?lalt cursor. Apela?i subprogramul.
 
@@ -147,9 +147,9 @@ end;
 
 
 -- 8
--- Formula?i în limbaj natural o problem? pe care s? o rezolva?i folosind un subprogram stocat independent de tip func?ie
--- care s? utilizeze într-o singur? comand? SQL 3 dintre tabelele definite. Defini?i minim 2 excep?ii proprii. 
--- Apela?i subprogramul astfel încât s? eviden?ia?i toate cazurile definite ?i tratate.
+-- Formula?i ï¿½n limbaj natural o problem? pe care s? o rezolva?i folosind un subprogram stocat independent de tip func?ie
+-- care s? utilizeze ï¿½ntr-o singur? comand? SQL 3 dintre tabelele definite. Defini?i minim 2 excep?ii proprii. 
+-- Apela?i subprogramul astfel ï¿½ncï¿½t s? eviden?ia?i toate cazurile definite ?i tratate.
 
 -- Pentru zborul care ajunge intr-un oras dat, micsorati cu un procent p dat preturile locurilor 
 -- care nu s-au vandut mai scumpe decat un pret dat si returnati numarul de preturi schimbate.
@@ -227,10 +227,10 @@ rollback;
 
 
 -- 9
--- Formula?i în limbaj natural o problem? pe care s? o rezolva?i folosind un subprogram stocat independent 
--- de tip procedur? care s? utilizeze într-o singur? comand? SQL 5 dintre tabelele definite. 
--- Trata?i toate excep?iile care pot ap?rea, incluzând excep?iile NO_DATA_FOUND ?i TOO_MANY_ROWS. 
--- Apela?i subprogramul astfel încât s? eviden?ia?i toate cazurile tratate.
+-- Formula?i ï¿½n limbaj natural o problem? pe care s? o rezolva?i folosind un subprogram stocat independent 
+-- de tip procedur? care s? utilizeze ï¿½ntr-o singur? comand? SQL 5 dintre tabelele definite. 
+-- Trata?i toate excep?iile care pot ap?rea, incluzï¿½nd excep?iile NO_DATA_FOUND ?i TOO_MANY_ROWS. 
+-- Apela?i subprogramul astfel ï¿½ncï¿½t s? eviden?ia?i toate cazurile tratate.
 
 -- Pentru un pasager dat, sa se afle cate zboruri din cele in care are rezervare pleaca dintr-o tara data
 -- si locul rezervat este la o clasa data
@@ -432,7 +432,7 @@ drop table rezervari2;
 
 
 -- 13
--- Defini?i un pachet care s? con?in? toate obiectele definite în cadrul proiectului.
+-- Defini?i un pachet care s? con?in? toate obiectele definite ï¿½n cadrul proiectului.
 create or replace package pachet13 as
     procedure p6(v_nr in number, v_max in number);
     procedure p7(v_nr_min in number);
